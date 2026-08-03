@@ -2,183 +2,414 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para ti ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feliz Cumpleaños ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        /* --- ESTILOS GENERALES Y FONDO --- */
+        *, ::before, ::after { box-sizing: border-box; }
+        
         body {
-            background-color: #0b0c10;
-            font-family: 'Georgia', serif;
+            font-family: "Quicksand", sans-serif;
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: #333;
+            overflow: hidden;
+            background: #d4dce4; /* Azul grisáceo pálido */
         }
 
-        /* GIF Oculto de fondo */
         .bg-gif-fijo {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('https://i.pinimg.com/originals/e8/3b/68/e83b683d78c0e25b0429f93930b8d522.gif');
+            inset: 0;
+            z-index: -1;
+            /* Nuevo fondo de cumpleaños */
+            background-image: url('https://neuro-class.com/wp-content/uploads/2025/01/image-12-768x569.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            z-index: 1;
-            pointer-events: none;
+            filter: brightness(0.9);
         }
 
-        /* Contenedor principal del Sobre */
-        .envelope-wrapper {
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-            perspective: 1000px;
-        }
-
+        /* --- SOBRE (ENVELOPE) --- */
         .envelope {
+            --width: 300px;
+            --height: 175px;
             position: relative;
-            width: 320px;
-            height: 220px;
-            background-color: #b02a2a;
-            border-radius: 4px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            transition: transform 0.5s ease;
+            width: var(--width);
+            height: var(--height);
+            perspective: 1000px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        @media (min-width: 720px) {
+            .envelope { --width: 500px; --height: 290px; }
         }
 
         .envelope-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            border-radius: 4px;
+            transition: transform 0.8s ease-in-out;
+            transform-style: preserve-3d;
         }
 
-        /* Solapa superior */
-        .flap {
+        .envelope.open .envelope-inner { transform: rotateY(180deg); }
+
+        .envelope-front, .envelope-back {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid transparent;
-            border-right: 160px solid transparent;
-            border-top: 115px solid #d32f2f;
-            transform-origin: top;
-            transition: transform 0.6s ease, z-index 0.2s;
-            z-index: 5;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        /* Lados del sobre */
-        .pocket {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 160px solid #9a2222;
-            border-right: 160px solid #9a2222;
-            border-bottom: 110px solid #b02a2a;
-            z-index: 4;
-        }
-
-        /* Sello postal / Frente del sobre */
         .envelope-front {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 6;
+            background: #8b9eb5; /* Azul estilo Cadáver de la Novia */
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-            pointer-events: none;
-        }
-
-        .stamp {
-            width: 50px;
-            height: 60px;
-            align-self: flex-end;
-            border: 2px dashed #fff;
-            object-fit: cover;
-        }
-
-        .envelope-text {
-            color: #ffffff;
-            font-size: 1.1rem;
-            font-style: italic;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        /* Carta dentro del sobre */
-        .letter {
-            position: absolute;
-            bottom: 10px;
-            left: 15px;
-            width: 290px;
-            height: 190px;
-            background: #fffdf8;
-            border-radius: 4px;
-            padding: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: transform 0.8s ease-in-out, opacity 0.5s ease;
-            z-index: 3;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .letter h2 {
-            font-size: 1.2rem;
-            color: #b02a2a;
-            margin-bottom: 8px;
+        .envelope-front img.stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 60px;
+            height: 70px;
+            border-radius: 4px;
+            border: 2px dashed #1c2b39; /* Borde oscuro */
         }
 
-        .letter p {
-            font-size: 0.85rem;
-            line-height: 1.3;
-            color: #444;
+        .envelope-back {
+            background: #758a9f; /* Azul un poco más oscuro */
+            transform: rotateY(180deg);
         }
 
-        /* Animación al abrir */
-        .envelope-wrapper.open .flap {
-            transform: rotateX(180deg);
+        .envelope-back::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(transparent 60deg, #667a8f 60deg 120deg, #c9d6e2 120deg 240deg, #667a8f 240deg 300deg, transparent 300deg);
             z-index: 2;
         }
 
-        .envelope-wrapper.open .letter {
-            transform: translateY(-130px) scale(1.05);
-            z-index: 7;
-            height: auto;
-            max-height: 280px;
+        .top-fold {
+            position: absolute;
+            inset: 0;
+            background: #758a9f; /* Azul un poco más oscuro */
+            clip-path: polygon(0% 0%, 50% 55%, 100% 0%);
+            z-index: 10;
+            transform-origin: top;
+            transition: transform 0.4s ease 0.4s;
         }
 
-        .envelope-wrapper.open .envelope-front {
+        .envelope.open .top-fold { transform: rotateX(180deg); z-index: 0; }
+
+        .letter-preview {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            width: 90%;
+            height: 80%;
+            background: white;
+            transform: translateX(-50%);
+            z-index: 1;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.4s ease 0.6s;
+        }
+
+        .envelope.open .letter-preview { transform: translate(-50%, -40%); }
+
+        /* --- MODAL MEJORADO --- */
+        .modal-carta {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6); /* Fondo un poco más oscuro */
+            backdrop-filter: blur(8px);
             opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            padding: 20px;
+        }
+
+        .modal-carta.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-carta-content {
+            background-image: url("https://i.pinimg.com/736x/ce/ea/8c/ceea8cc707d9cbe845db2e8ab6653889.jpg");
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            max-width: 520px;
+            max-height: calc(100vh - 80px);
+            border-radius: 22px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+            overflow: hidden; 
+            padding: 10px; 
+            box-sizing: border-box;
+        }
+
+        .modal-carta-content::-webkit-scrollbar { display: none; }
+
+        .modal-carta-body {
+            background: transparent;
+            border-radius: 18px;
+            padding: 26px 20px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            box-sizing: border-box;
+            border: 0; 
+            box-shadow: inset 0 0 0 4px rgba(117,138,159,0.95); /* Borde interno azul */
+        }
+
+        .modal-carta-body::-webkit-scrollbar { display: none; }
+
+        .modal-footer-gif {
+            width: 100%;
+            max-width: 250px;
+            display: block;
+            margin: 20px auto 0;
+            border-radius: 15px;
+            opacity: 1;
+        }
+
+        .gift-hint {
+            margin-top: 8px;
+            margin-bottom: 8px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #1c2b39; /* Azul oscuro/marino */
+            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.75);
+        }
+
+        .modal-carta-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #758a9f; /* Azul para el botón cerrar */
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .modal-carta-close:hover { transform: scale(1.1) rotate(90deg); }
+
+        .letra-flotante-badge {
+            display: inline-block;
+            background: #2c3e50; /* Azul oscuro elegante */
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            animation: float 2s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 420px) {
+            .modal-carta { padding: 12px; }
+            .modal-carta-content {
+                padding: 18px 14px;
+                border: 4px solid #fff;
+                max-width: 96vw;
+                max-height: calc(100vh - 40px);
+                border-radius: 16px;
+            }
+            .modal-carta-content::before { box-shadow: inset 0 0 0 3px rgba(117,138,159,0.95); }
+            .modal-footer-gif { max-width: 200px; }
+        }
+
+        .texto-carta {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #1a252f; /* Azul muy oscuro/casi negro */
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .texto-carta .resaltado {
+            font-weight: 800;
+            color: #0d1b2a; /* Azul noche */
+            background: rgba(117,138,159,0.15); /* Fondo azul transparente */
+            padding: 6px 8px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .img-polaroid {
+            width: 180px;
+            height: 180px;
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            margin: 20px auto;
+            transform: rotate(-3deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+            display: block;
+            cursor: default;
+        }
+
+        .img-polaroid.visible {
+            opacity: 1;
+            transform: rotate(2deg) scale(1.1);
+        }
+
+        .img-polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ajustado para que el banner se vea entero */
+            border-radius: 2px;
+        }
+
+        .modal-footer-gif.shake {
+            animation: gentle-shake 1.8s ease-in-out infinite;
+            cursor: pointer;
+        }
+
+        @keyframes gentle-shake {
+            0% { transform: rotate(2deg) scale(1.1) translateX(0); }
+            20% { transform: rotate(1deg) scale(1.1) translateX(-2px); }
+            40% { transform: rotate(3deg) scale(1.1) translateX(2px); }
+            60% { transform: rotate(1deg) scale(1.1) translateX(-2px); }
+            80% { transform: rotate(3deg) scale(1.1) translateX(2px); }
+            100% { transform: rotate(2deg) scale(1.1) translateX(0); }
+        }
+
+        /* --- MODAL EXTRA DE IMAGEN --- */
+        .modal-extra {
+            position: fixed;
+            inset: 0;
+            z-index: 4000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
             transition: opacity 0.3s ease;
+            padding: 20px;
         }
 
-        .envelope-wrapper.open .bg-gif-fijo {
-            opacity: 0.85;
+        .modal-extra.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        /* --- Estilos CSS de la Nieve --- */
+        .modal-extra-content {
+            position: relative;
+            width: min(420px, 95vw);
+            background: transparent;
+            border-radius: 18px;
+            padding: 18px 16px 16px;
+            text-align: center;
+            box-shadow: none;
+        }
+
+        .modal-extra-title {
+            margin: 0 0 12px;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.6rem, 5vw, 2.1rem);
+            color: #111;
+            font-weight: 700;
+            text-shadow: 0 1px 6px rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: inline-block;
+        }
+
+        .modal-extra-img {
+            width: 100%;
+            max-height: 65vh;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+            animation: modal-image-float 2.4s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes modal-image-float {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.02); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .modal-extra-img {
+                animation: none;
+            }
+        }
+
+        .modal-extra-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: #758a9f; /* Botón cerrar extra azul */
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* --- MODAL IMAGEN AMPLIADA --- */
+        .modal-imagen-flotante {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        
+        .modal-imagen-flotante img {
+            max-width: 90%;
+            max-height: 80%;
+            border: 10px solid white;
+            border-radius: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- Efecto Nieve --- */
         .snowflake {
             position: fixed;
             top: -10px;
@@ -192,91 +423,160 @@
         }
 
         @keyframes fall {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0.2;
-            }
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0.2; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-gif-fijo" id="bgGif"></div>
+    <div class="bg-gif-fijo"></div>
 
-    <!-- Audio Oculto -->
-    <audio id="audioCarta" loop preload="auto">
+    <!-- Audio Oculto Original (Ice Dance corregido para móvil) -->
+    <audio id="audioCarta" loop>
         <source src="https://github.com/Brian200033/sorpresa/raw/refs/heads/main/Ice%20Dance.m4a.mp4" type="audio/mp4">
     </audio>
 
-    <!-- Sobre interactivo -->
-    <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="envelope-inner">
-                <div class="pocket"></div>
-                <div class="letter">
-                    <h2>Para Ti ❤️</h2>
-                    <p>
-                        Esta es una sorpresa especial para ti. <br><br>
-                        Gracias por estar presente y hacer cada día algo único. 
-                        Espero que este pequeño detalle te saque una sonrisa. ✨
-                    </p>
+    <!-- Sobre -->
+    <div class="envelope" id="envelope">
+        <div class="envelope-inner">
+            <div class="envelope-front">
+                <!-- Imagen de Snoopy en el sello -->
+                <img src="https://i.pinimg.com/736x/d2/4e/56/d24e56948e00b8a3193dd810a61526a1.jpg" class="stamp" alt="sello">
+                <div style="text-align: left; color: white;">
+                    <p><b>Para:</b> ti ❤️</p>
+                    <p><b>De:</b> mi</p>
                 </div>
             </div>
-            <div class="envelope-front">
-                <img src="https://i.pinimg.com/736x/d2/4e/56/d24e56948e00b8a3193dd810a61526a1.jpg" class="stamp" alt="sello">
-                <div class="envelope-text">
-                    <p><b>Para:</b> Ti ❤️</p>
-                    <p style="font-size: 0.8rem; opacity: 0.8;">(Haz clic para abrir)</p>
+            <div class="envelope-back">
+                <div class="top-fold"></div>
+                <div class="letter-preview">
+                    <img src="https://img.freepik.com/vector-premium/pulgar-dedos-imprimir-marca-huella-dactilar-amor-corazon_53500-1839.jpg" style="width: 50px;" alt="">
+                    <p style="color: #1c2b39; font-weight: bold; font-size: 0.9rem;">Ábreme para ver tu sorpresa...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Script para abrir sobre, reproducir audio y generar nieve -->
+    <!-- Modal de la Carta -->
+    <div class="modal-carta" id="modalCarta">
+        <div class="modal-carta-content">
+            <button class="modal-carta-close" id="closeModalCarta">&times;</button>
+            
+            <div class="modal-carta-body">
+                <div style="text-align: center;">
+                    <div class="letra-flotante-badge">¡Feliz Cumpleaños!</div>
+                    
+                    <div class="img-polaroid" id="imgPrincipal">
+                        <!-- Imagen de banner de feliz cumpleaños agregada -->
+                        <img src="https://i.pinimg.com/originals/0f/59/d6/0f59d6e2cd9d61836627ea1b5304e0ca.jpg" alt="feliz cumpleaños banner">
+                    </div>
+
+                    <div class="texto-carta">
+                        Hoy es un día muy especial porque celebramos tu vida y todo lo bonito que traes a las personas que te rodean. ✨<br><br>
+                        Deseo que este nuevo año te regale sonrisas sinceras, momentos inolvidables, salud, amor y muchos sueños cumplidos.<br><br>
+                        Que nunca te falten razones para sentirte feliz, ni que te falten personas que te quieran de verdad y te acompañen en cada paso.<br><br>
+                        <strong class="resaltado">Que la vida te sorprenda con cosas hermosas, que cada deseo de tu corazón encuentre su camino y que hoy seas muy feliz.</strong><br><br>
+                        <strong class="resaltado">¡Feliz cumpleaños! Que tengas un día muy bonito! ❤️</strong>
+                    </div>
+
+                    <div class="gift-hint">Tu regalo!! Abrelo!</div>
+                    <img id="giftDebajo" src="https://i.pinimg.com/1200x/d9/c2/ad/d9c2ad0f69b6bf26777b1992334a482a.jpg" class="modal-footer-gif shake" alt="gif cumpleaños">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal extra -->
+    <div class="modal-extra" id="modalExtra">
+        <div class="modal-extra-content">
+            <button class="modal-extra-close" id="closeModalExtra" aria-label="Cerrar">&times;</button>
+            <h3 class="modal-extra-title">Sorpresa!! tu regalo soy yo!</h3>
+            <img class="modal-extra-img" src="https://i.pinimg.com/736x/e1/78/ed/e178ed3d4101a7f87d89db1b9338f440.jpg" alt="detalle de cumpleaños">
+        </div>
+    </div>
+
     <script>
-        const wrapper = document.getElementById('envelopeWrapper');
-        const bgGif = document.getElementById('bgGif');
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        const envelope = document.getElementById('envelope');
+        const modal = document.getElementById('modalCarta');
+        const closeBtn = document.getElementById('closeModalCarta');
         const audio = document.getElementById('audioCarta');
+        const imgPolaroid = document.getElementById('imgPrincipal');
+        const giftDebajo = document.getElementById('giftDebajo');
+        const modalExtra = document.getElementById('modalExtra');
+        const closeModalExtraBtn = document.getElementById('closeModalExtra');
 
-        wrapper.addEventListener('click', () => {
-            wrapper.classList.toggle('open');
+        envelope.addEventListener('click', () => {
+            const isOpening = !envelope.classList.contains('open');
+            envelope.classList.toggle('open');
 
-            if (wrapper.classList.contains('open')) {
-                bgGif.style.opacity = '0.85';
-                audio.play().catch(error => {
-                    console.log("El navegador bloqueó el auto-play hasta otra interacción:", error);
-                });
-            } else {
-                bgGif.style.opacity = '0';
-                audio.pause();
+            if (isOpening) {
+                // Iniciar música
+                if (audio.paused) {
+                    audio.play().catch(() => console.log("Se requiere interacción para iniciar audio"));
+                }
+
+                setTimeout(() => {
+                    modal.classList.add('active');
+                    setTimeout(() => {
+                        imgPolaroid.classList.add('visible');
+                    }, 500);
+                }, 1200);
             }
         });
 
-        // Función para crear copos de nieve
+        function closeModal() {
+            modal.classList.remove('active');
+            imgPolaroid.classList.remove('visible');
+            setTimeout(() => {
+                envelope.classList.remove('open');
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        function openModalExtra() {
+            modalExtra.classList.add('active');
+        }
+
+        function closeModalExtra() {
+            modalExtra.classList.remove('active');
+        }
+
+        giftDebajo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openModalExtra();
+        });
+
+        closeModalExtraBtn.addEventListener('click', closeModalExtra);
+        modalExtra.addEventListener('click', (e) => {
+            if (e.target === modalExtra) closeModalExtra();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalExtra.classList.contains('active')) {
+                closeModalExtra();
+            }
+        });
+
+        // Generar la nieve
         function createSnowflake() {
             const flake = document.createElement('div');
             flake.classList.add('snowflake');
             flake.innerHTML = '❄';
-            
             flake.style.left = Math.random() * 100 + 'vw';
             flake.style.fontSize = (Math.random() * 12 + 10) + 'px';
             flake.style.opacity = Math.random() * 0.7 + 0.3;
-            
             const duration = Math.random() * 5 + 3;
             flake.style.animationDuration = duration + 's';
-            
             document.body.appendChild(flake);
-            
-            setTimeout(() => {
-                flake.remove();
-            }, duration * 1000);
+            setTimeout(() => { flake.remove(); }, duration * 1000);
         }
-
         setInterval(createSnowflake, 200);
     </script>
 </body>
