@@ -407,7 +407,32 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
-        }
+        }<script>
+  function createSnowflake() {
+    const flake = document.createElement('div');
+    flake.classList.add('snowflake');
+    flake.innerHTML = '❄'; // Si prefieres copitos más suaves o bolitas, puedes cambiar '❄' por '•'
+    
+    // Posición horizontal aleatoria y tamaño variable
+    flake.style.left = Math.random() * 100 + 'vw';
+    flake.style.fontSize = (Math.random() * 12 + 10) + 'px';
+    flake.style.opacity = Math.random() * 0.7 + 0.3;
+    
+    // Duración de la caída aleatoria entre 3 y 8 segundos
+    const duration = Math.random() * 5 + 3;
+    flake.style.animationDuration = duration + 's';
+    
+    document.body.appendChild(flake);
+    
+    // Elimina el copo de nieve cuando termina de caer
+    setTimeout(() => {
+      flake.remove();
+    }, duration * 1000);
+  }
+
+  // Genera un copo cada 200 milisegundos
+  setInterval(createSnowflake, 200);
+</script>
     </style>
 </head>
 <body>
